@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Upload zdjęcia dla #{{ id }}</h1>
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+    <div class="mb-2">{{ form_row(form.additionalMetadata) }}</div>
+    <div class="mb-2">{{ form_row(form.file) }}</div>
+    <button class="btn btn-primary">Wyślij</button>
+    <a class="btn btn-link" href="{{ path('pet_show', {id: id}) }}">Wróć</a>
+    {{ form_end(form) }}
+{% endblock %}

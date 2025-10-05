@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1 class="mb-3">{{ title }}</h1>
+    {{ form_start(form) }}
+    <div class="mb-2">{{ form_row(form.id) }}</div>
+    <div class="mb-2">{{ form_row(form.name) }}</div>
+    <div class="mb-2">{{ form_row(form.status) }}</div>
+    <div class="mb-2">{{ form_row(form.categoryName) }}</div>
+    <div class="mb-2">{{ form_row(form.tagsCsv) }}</div>
+    <div class="mb-2">
+        <label class="form-label">Photo URLs</label>
+        <div id="photo_urls"
+             data-prototype="{{ form_widget(form.photoUrls.vars.prototype)|e('html_attr') }}"
+             data-index="{{ form.photoUrls|length }}">
+            {% for urlField in form.photoUrls %}
+                <div class="d-flex gap-2 mb-2 photo-row">
+                    <div class="flex-fill">{{ form_widget(urlField) }}</div>
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-url">Usuń</button>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-url" class="btn btn-outline-primary btn-sm mt-2">+ Dodaj URL</button>
+        <div class="form-text">Dodaj kilka adresów obrazków.</div>
+    </div>
+    <button class="btn btn-primary">{{ submitLabel }}</button>
+    <a class="btn btn-link" href="{{ path('pet_index') }}">Wróć</a>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('photo_urls');
+            if (!container) return;
+
+            const addBtn = document.getElementById('add-url');
+
+            function addField(value='') {
+                let index = parseInt(container.dataset.index || '0', 10);
+                const prototype = container.dataset.prototype.replace(/__name__/g, index);
+                const row = document.createElement('div');
+                row.className = 'd-flex gap-2 mb-2 photo-row';
+                row.innerHTML = '<div class="flex-fill">'+prototype+'</div>'
+                    + '<button type="button" class="btn btn-outline-danger btn-sm remove-url">Usuń</button>';
+                container.appendChild(row);
+                container.dataset.index = String(index + 1);
+                if (value) row.querySelector('input').value = value;
+            }
+
+            if (parseInt(container.dataset.index || '0', 10) === 0) addField();
+
+            addBtn.addEventListener('click', () => addField());
+
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-url')) {
+                    e.preventDefault();
+                    e.target.closest('.photo-row').remove();
+                }
+            });
+        });
+    </script>
+{% endblock %}

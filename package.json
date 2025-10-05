@@ -1,0 +1,11 @@
+{
+    "devDependencies": {
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+    },
+    "dependencies": {
+        "jquery": "^3.7.1"
+    }
+}

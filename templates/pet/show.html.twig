@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Pet #{{ pet.id }}</h1>
+    <dl class="row">
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9">{{ pet.name }}</dd>
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9"><span class="badge bg-secondary">{{ pet.status }}</span></dd>
+        <dt class="col-sm-3">Category</dt>
+        <dd class="col-sm-9">{{ pet.categoryName ?? '—' }}</dd>
+        <dt class="col-sm-3">Tags</dt>
+        <dd class="col-sm-9">{{ pet.tagsCsv ?? '—' }}</dd>
+    </dl>
+    {% if pet.photoUrls %}
+        <div class="row g-3">
+            {% for u in pet.photoUrls %}
+                <div class="col-auto"><img src="{{ u }}" alt="" style="max-height:120px" class="border rounded"></div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="mt-3 d-flex gap-2">
+        <a class="btn btn-outline-primary" href="{{ path('pet_upload', {id: pet.id}) }}">Wyślij zdjęcie</a>
+        <a class="btn btn-outline-secondary" href="{{ path('pet_edit', {id: pet.id}) }}">Edytuj</a>
+        <form method="post" action="{{ path('pet_delete', {id: pet.id}) }}" onsubmit="return confirm('Usunąć?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete_pet_' ~ pet.id) }}">
+            <button class="btn btn-outline-danger">Usuń</button>
+        </form>
+        <a class="btn btn-link" href="{{ path('pet_index') }}">Wróć</a>
+    </div>
+{% endblock %}

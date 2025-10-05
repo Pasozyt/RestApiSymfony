@@ -1,12 +1,13 @@
-# Uruchomienie projektu z Docker Compose
+# Przykład REST API (Symfony) — Docker + Nginx + MySQL
 
-Ten projekt korzysta z konteneryzacji za pomocą **Docker** oraz **Docker Compose**.
+To repozytorium prezentuje **przykładowe REST API oparte na Symfony**, uruchamiane w kontenerach **Docker**. Całość środowiska składa się z usług: **Nginx** (serwer WWW), **PHP/Symfony (app)** oraz **MySQL** (baza danych), zarządzanych przez **Docker Compose**.
+
+---
 
 ## Wymagania
 
 - Zainstalowany **Docker** i **Docker Compose**
-- Dostęp do pliku `docker-compose.yml`
-- Plik wzorcowy `/.env.dist`
+- Dostęp do plików: `docker-compose.yml` oraz `.env.dist`
 
 > Jeśli nie masz Dockera: https://docs.docker.com/get-docker/
 
